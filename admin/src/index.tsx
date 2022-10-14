@@ -29,16 +29,37 @@ export default {
         // },
       ],
     });
-    const plugin = {
+
+    app.createSettingSection(
+      {
+        id: pluginId,
+        intlLabel: {
+          id: `${pluginId}.plugin.name`,
+          defaultMessage: 'Novu',
+        },
+      },
+      [
+        {
+          intlLabel: {
+            id: `${pluginId}.plugin.name`,
+            defaultMessage: 'Settings',
+          },
+          id: 'settings',
+          to: `/settings/${pluginId}`,
+          Component: async () => {
+            return import('./pages/Settings');
+          },
+        },
+      ]
+    );
+
+    app.registerPlugin({
       id: pluginId,
       initializer: Initializer,
       isReady: false,
       name,
-    };
-
-    app.registerPlugin(plugin);
+    });
   },
-
   bootstrap(app) {},
   async registerTrads(app) {
     const { locales } = app;
